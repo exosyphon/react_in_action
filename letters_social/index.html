@@ -12,43 +12,17 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.38/browser.min.js">
 	</script>
 	<script type="text/babel">
-	const ChildComponent = React.createClass({
-		render: function() {
-			console.log('ChildComponent: render');
-			return (
-				<div>
-				Props: {this.props.name}
-				</div>
-				);
-		},
-	});
-	const ParentComponent = React.createClass({
-		getInitialState: function() {
-			return {
-				text: ''
-			}
-		},
-		onInputChange: function(e) {
-			this.setState({ text: e.target.value }); 
-		},
-		render: function() {
-			console.log('ParentComponent: render');
-			return (
-				<div className="container">
-				<h2>Learn about rendering and lifecycle methods!</h2>
-				<input
-				value={this.state.text}
-				onChange={this.onInputChange}
-				/>
-				<ChildComponent name={this.state.text} />
-				</div>
-				);
-		},
-	});
-	ReactDOM.render(
-		<ParentComponent />,
-		document.getElementById('container')
-		);
-	</script>
+	var mountNode = document.getElementById('container');
+	function Greeting(props) { 
+		return <div>Hello {props.for}!</div>;
+	}
+	Greeting.propTypes = { 
+		for: React.PropTypes.string.isRequired
+	};
+Greeting.defaultProps = { 
+	for: 'hi'
+};
+ReactDOM.render(<Greeting for="Mark" />, mountNode);
+</script>
 </body>
 </html>

@@ -167,7 +167,7 @@
 			});
 			this.setState({ 
 				user: '', 
-				text: '' 
+				content: '' 
 			});
 		},
 		render: function() {
@@ -184,7 +184,8 @@
 			React.createElement('input', {
 				type: 'text',
 				placeholder: 'Thoughts?',
-				value: this.state.text,
+				value: this.state.content,
+				onChange: this.handleTextChange
 			}),
 			React.createElement('input', {
 				type: 'submit',

@@ -76,18 +76,38 @@
 				user: ''
 			};
 		},
+		handleAuthorChange: function(event) { 
+			this.setState({ 
+				user: event.target.value 
+			}); 
+		}, 
+		handleTextChange: function(event) { 
+			this.setState({ 
+				content: event.target.value 
+			}); 
+		}, 
+		handleSubmit: function(event) { 
+			event.preventDefault(); 
+			this.setState({ 
+				user: '', 
+				text: '' 
+			});
+		},
 		render: function() {
 			return React.createElement('form', {
 				className: 'createComment',
+				onSubmit: this.handleSubmit
 			},
 			React.createElement('input', {
 				type: 'text',
 				placeholder: 'Your name',
 				value: this.state.user,
+				onChange: this.handleAuthorChange
 			}),
 			React.createElement('input', {
 				type: 'text',
-				placeholder: 'Thoughts?'
+				placeholder: 'Thoughts?',
+				value: this.state.text,
 			}),
 			React.createElement('input', {
 				type: 'submit',
@@ -96,19 +116,8 @@
 			);
 		}
 	});
-	// var App = React.createElement(Post, { 
-	// 	id: 1, 
-	// 	content: " said: This is a post!", 
-	// 	user: 'mark', 
-	// },
-	// React.createElement(Comment, { 
-	// 	id: 2, 
-	// 	user: 'bob',
-	// 	content: " commented: wow! how cool!" 
-	// })
-	// );
 
-	var App = React.createElement(CreateComment, {});
+	var App = React.createElement(CreateComment);
 	ReactDOM.render(App, mountTarget);
 	</script>
 </body>

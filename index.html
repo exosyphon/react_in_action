@@ -9,7 +9,9 @@
 	src="https://cdn.jsdelivr.net/g/react@15.3.1(react.js+react-dom.js)">
 	</script>
 	<div id="ourFirstApp"></div> 
-	<script type="text/javascript">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.38/browser.min.js">
+	</script>
+	<script type="text/babel">
 	var data = {
 		"post": { 
 			"id": 123, 
@@ -62,25 +64,21 @@
 		},
 		render: function() {
 			return (
-				React.createElement('div', {
-					className: 'commentBox'
-				},
-				React.createElement(Post, {
-					id: this.props.post.id,
-					content: this.props.post.content,
-					user: this.props.post.user,
-				}),
-				this.state.comments.map(function(comment) {
-					return React.createElement(Comment, {
-						key: comment.id,
-						content: comment.content,
-						user: comment.user,
-					})
-				}),
-				React.createElement(CreateComment, {
-					onCommentSubmit: this.handleCommentSubmit
-				})
-				)
+				<div className="commentBox" >
+				<Post id={this.props.post.id} 
+				content={this.props.post.content} 
+				user={this.props.post.user}/>
+				{ 
+					this.state.comments.map(function(comment) {
+						return ( 
+							<Comment key={comment.id} 
+							content={comment.content} 
+							user={comment.user} /> 
+							) 
+					}) 
+				} 
+				<CreateComment onCommentSubmit={this.handleCommentSubmit}/>
+				</div>
 				);
 		}
 	});
@@ -149,12 +147,12 @@
 				user: ''
 			};
 		},
-		handleAuthorChange: function(event) { 
+		handleUserChange: function(event) { 
 			this.setState({ 
 				user: event.target.value 
 			});
 		}, 
-		handleTextChange: function(event) { 
+		handleContentChange: function(event) { 
 			this.setState({ 
 				content: event.target.value 
 			});
@@ -171,36 +169,29 @@
 			});
 		},
 		render: function() {
-			return React.createElement('form', {
-				className: 'createComment',
-				onSubmit: this.handleSubmit
-			},
-			React.createElement('input', {
-				type: 'text',
-				placeholder: 'Your name',
-				value: this.state.user,
-				onChange: this.handleAuthorChange
-			}),
-			React.createElement('input', {
-				type: 'text',
-				placeholder: 'Thoughts?',
-				value: this.state.content,
-				onChange: this.handleTextChange
-			}),
-			React.createElement('input', {
-				type: 'submit',
-				value: 'Post'
-			})
-			);
+			return (
+				<form onSubmit={this.handleSubmit} className="createComment">
+				<input type="text"
+				placeholder="Your name"
+				value={this.state.user}
+				onChange={this.handleUserChange}
+				/>
+				<input type="text"
+				placeholder="Thoughts?"
+				value={this.state.content}
+				onChange={this.handleContentChange}
+				/>
+				<input type="submit" value="Post"/>
+				</form>
+				);
 		}
 	});
 
 var App = React.createElement(CreateComment);
 
-ReactDOM.render(React.createElement(CommentBox, {
-	comments: data.comments,
-	post: data.post,
-}), mountTarget);
+ReactDOM.render(<CommentBox comments={data.comments}
+	post={data.post}/>,
+	mountTarget);
 </script>
 </body>
 </html>
